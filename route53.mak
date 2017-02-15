@@ -15,7 +15,7 @@ all: $(addprefix .route53/,$(ZONES))
 	touch $@
 
 db.%:
-	cli53 create --profile $(PROFILE) $(subst db.,,$@)
+	cli53 export --profile $(PROFILE) $(subst db.,,$@) > /dev/null || cli53 create --profile $(PROFILE) $(subst db.,,$@)
 	cli53 export --profile $(PROFILE) $(subst db.,,$@) > $@
 
 .PHONY: all
