@@ -18,10 +18,10 @@ BEGIN {
 	my %changed_zones;
 	foreach my $line (`git status --porcelain`) {
 		chomp $line;
-		if ($line =~ m{^[MADRCU]. db\.([^/]+)}) {
+		if ($line =~ m{^[MADRCU]. ([a-z0-9][^/]+)}) {
 			$changed_zones{$1} = 1;
 		}
-		if ($line =~ m{^[MADRCU]. .+ -> db\.([^/]+)}) {
+		if ($line =~ m{^[MADRCU]. .+ -> ([a-z0-9][^/]+)}) {
 			$changed_zones{$1} = 1;
 		}
 	}

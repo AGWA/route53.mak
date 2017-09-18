@@ -4,18 +4,18 @@
 # See COPYING file for license information.
 #
 
-ZONES ?= $(subst db.,,$(wildcard db.*))
+ZONES ?= $(wildcard [a-z0-9]*)
 PROFILE ?= default
 
 all: $(addprefix .route53/,$(ZONES))
 
-.route53/%: db.%
+.route53/%: %
 	cli53 import --profile $(PROFILE) --file $< --replace --wait $(notdir $@)
 	mkdir -p .route53
 	touch $@
 
-db.%:
-	cli53 export --profile $(PROFILE) $(subst db.,,$@) > /dev/null || cli53 create --profile $(PROFILE) $(subst db.,,$@)
-	cli53 export --profile $(PROFILE) $(subst db.,,$@) > $@
+%:
+	cli53 export --profile $(PROFILE) $@ > /dev/null || cli53 create --profile $(PROFILE) $@
+	cli53 export --profile $(PROFILE) $@ > $@
 
 .PHONY: all
