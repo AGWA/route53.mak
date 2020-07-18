@@ -10,7 +10,7 @@ PROFILE ?= default
 all: $(addprefix .route53/,$(ZONES))
 
 .route53/%: %
-	cli53 import --profile $(PROFILE) --file $< --replace --wait $(notdir $@)
+	cli53 import --profile $(PROFILE) --file $< --replace --editauth --wait $(notdir $@)
 	mkdir -p .route53
 	touch $@
 
